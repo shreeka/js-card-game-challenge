@@ -38,10 +38,8 @@ function drawACard (player) {
         if (discardPile.length === 0) {
             return null;
         }else {
-            let shuffledDiscardPile = shuffleDeck([...discardPile]);
-            player.drawPile = [...shuffledDiscardPile];
+            player.drawPile = shuffleDeck([...discardPile]);
             player.discardPile.length = 0;
-
         }
     }
     return player.drawPile.pop();
@@ -106,6 +104,6 @@ let player2 = {
     discardPile: []
 }
 
-
 playCardGame(player1,player2);
+
 module.exports = {createNewDeck,shuffleDeck,drawACard,playCardGame};

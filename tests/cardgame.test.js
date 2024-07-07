@@ -1,12 +1,13 @@
 const {createNewDeck,shuffleDeck,drawACard,playCardGame} = require('../cardgame');
 
 describe('Shuffle deck test', () => {
+    let mathSpy;
     beforeAll(() => {
-        jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
+        mathSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
     });
 
     afterAll(() => {
-        jest.spyOn(global.Math, 'random').mockRestore();
+        mathSpy.mockRestore();
     });
 
     test('New deck has 40 cards', () => {
@@ -24,19 +25,16 @@ describe('Shuffle deck test', () => {
 });
 
 describe('Draw card test', () => {
-    let consoleSpy;
     let mathSpy;
     beforeAll(() => {
-        consoleSpy = jest.spyOn(global.console, 'log').mockImplementation(() => {});
         mathSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789);
     });
 
     afterAll(() => {
-        consoleSpy.mockRestore();
         mathSpy.mockRestore();
     });
 
-    test('If empty draw pile, discard pile shuffled into draw pile', () => {
+    test('If empty draw pile, discard pile is shuffled into draw pile', () => {
         let player = {
             drawPile: [],
             discardPile: [1,2,3,4,5,6,7,8,9,10]
@@ -83,8 +81,6 @@ describe('Playing a turn test', () => {
        playCardGame(player1,player2);
        const lastLogCall = consoleSpy.mock.calls[consoleSpy.mock.calls.length - 1][0];
        expect(lastLogCall).toBe('Player 1 wins the game!');
-
-
    });
 
 
