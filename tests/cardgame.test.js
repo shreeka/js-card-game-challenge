@@ -48,6 +48,15 @@ describe('Draw card test', () => {
 });
 
 describe('Playing a turn test', () => {
+    let consoleSpy;
+    beforeEach(() => {
+        consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        consoleSpy.mockRestore();
+    });
+
    test('When comparing two cards, higher card wins', () => {
        let player1 = {
          drawPile: [7],
@@ -57,8 +66,6 @@ describe('Playing a turn test', () => {
          drawPile: [10],
          discardPile: []
        };
-       const consoleSpy =
-           jest.spyOn(console, 'log').mockImplementation(() => {});
 
        playCardGame(player1,player2);
        const lastLogCall = consoleSpy.mock.calls[consoleSpy.mock.calls.length - 1][0];
@@ -66,6 +73,7 @@ describe('Playing a turn test', () => {
 
 
    });
+
    test('When comparing two cards of same value, winner of next round wins all 4', () => {
        let player1 = {
          drawPile: [7,9],
@@ -75,8 +83,6 @@ describe('Playing a turn test', () => {
          drawPile: [7,2],
          discardPile: []
        };
-       const consoleSpy =
-           jest.spyOn(console, 'log').mockImplementation(() => {});
 
        playCardGame(player1,player2);
        const lastLogCall = consoleSpy.mock.calls[consoleSpy.mock.calls.length - 1][0];
